@@ -121,6 +121,28 @@
     <value>True</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnSubmitKey.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAAAWEAAAFhAfKe8T4AAAAZdEVYdFNvZnR3YXJlAHd3dy5pbmtzY2FwZS5vcmeb7jwa
+        AAADnklEQVR4XuWbS2vUUBiGq4gLQUUX9X7buXRnoaIxSTt0koydmRw6KoiKC9GCKIi40Vat4kIUXLpx
+        Z8FF/QctXkpBUNGFl2otgv+h4uX4fQNTDsPbNpNkkp6k8EyZZ0L7vW+YyWmSdkgpOyxPXDNd8UEIsZqf
+        MwecYxss158x3erZhqtv64oLtutPd5dKa1WvK/UH0/UnKKw0+mu7Gy/YXqWLneVWRxuOsRz/Gfueotin
+        el2pP9BevUShXhiGsarxQl/f8XXk3tDePtFwjOn5ZyzPf+153hrV6wqUeQLKPAFlnoAyT0CZJ6BUoa8V
+        tBa4Q0eDGWJO4ReCjhxzrSF+0vfbVunoJvT72w2UKrZXvUgDykKpKoUoBWOgLEWtEginXP3HP9/2/Gmj
+        r7IdzdBOoFShPTTGA07d2yvlaGdAaGdOdEk5ZS3J71eWHL5cogVXOiVAqUKD3eXhrp8z5J8nFAwGRgQv
+        4c9keiVAqWLbYr3lVb/ycMMZLAHKZngY+oD7xsPdOH8oUyVAichqCVAuRBZLgHIxslYClEvRe6S2g0qY
+        yUIJUAahuYS/mpYAZVDUEm5qWgKUraB7CVC2is4lQBkG2xM7acX4nYe7NahPCVCGRccSoIyCbiVAGRW1
+        hJHBg8u6BCjjQJcSoIwLs1jZRYPNLucSoIyTtEowXbENzdMMlHETuYTn3TB0M2oJpiNeDg0NrUTzqEDZ
+        DiKV8JR2JgiM4BJOnyzXS7Acv4ZmUYGyXaglPLqyH4ddiMnDMDBi7GGx8Va4j+ZQgbJd5LqANN4CpuML
+        NIsKlHGTxocgMc5XtdA8KlDGSeTwYQ6Drv/RKIrNaJ5moIyL5R6egTIO0lgKW57/qZXwDJRRSSt8oVDZ
+        guZZDCijkMafw2HDM1CGRbfwDJRh0DE8A2WrpHFS1HLF56jhGShbQefwDJRBSSt8T6m2Fc0TBiiDoIZP
+        6tJY3OEZKJeiOXwiF0dd/0vc4RkoF4PPt9EwyV4eb1N4BsqFyFp4BkpEWuGDntwMC5TNZDU8A6VKWrfJ
+        JRGegVKFBkr8RsmkwjNQqiR9q2yS4RkoVZK8WTrp8AyUKrm/XT7rQJknoMwTUOYJKPMElLrBS3XL89/b
+        jnBUT0eXq8S4ep9AoSA20pHnHTHAz+c31hlaqvdTUFpMVR+ontYWU+zViyV0qDbq23r+Y34+v7HO9Hpi
+        D4X/QXvVVz2FHKGwb9V/Cu8tlzvJzZquf0pK2fEfWRTUILt8YNwAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="btnKey.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAB
@@ -150,7 +172,4 @@
         IPDZgmfr4YKwVTY8HLtb3WK6ruGVrmt4IvofMUIz/CGQYc0AAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="pictureBox1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
 </root>

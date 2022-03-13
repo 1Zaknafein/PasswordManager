@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(KeySettings_Form));
             this.label1 = new System.Windows.Forms.Label();
             this.textBox_key = new System.Windows.Forms.TextBox();
             this.btnEdit = new System.Windows.Forms.Button();
@@ -37,6 +38,7 @@
             this.btnEditOK = new System.Windows.Forms.Button();
             this.btnEditCancel = new System.Windows.Forms.Button();
             this.label_tick = new System.Windows.Forms.Label();
+            this.btn_visibility = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -176,12 +178,28 @@
             this.label_tick.Text = "✓";
             this.label_tick.Visible = false;
             // 
+            // btn_visibility
+            // 
+            this.btn_visibility.BackColor = System.Drawing.Color.Transparent;
+            this.btn_visibility.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btn_visibility.BackgroundImage")));
+            this.btn_visibility.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.btn_visibility.FlatAppearance.BorderSize = 0;
+            this.btn_visibility.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_visibility.Location = new System.Drawing.Point(331, 87);
+            this.btn_visibility.Name = "btn_visibility";
+            this.btn_visibility.Size = new System.Drawing.Size(43, 31);
+            this.btn_visibility.TabIndex = 9;
+            this.btn_visibility.UseVisualStyleBackColor = false;
+            this.btn_visibility.Visible = false;
+            this.btn_visibility.Click += new System.EventHandler(this.btn_visibility_Click);
+            // 
             // KeySettings_Form
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Teal;
             this.ClientSize = new System.Drawing.Size(707, 406);
+            this.Controls.Add(this.btn_visibility);
             this.Controls.Add(this.label_tick);
             this.Controls.Add(this.btnEditCancel);
             this.Controls.Add(this.btnEditOK);
@@ -210,5 +228,6 @@
         private System.Windows.Forms.Button btnEditOK;
         private System.Windows.Forms.Button btnEditCancel;
         private System.Windows.Forms.Label label_tick;
+        private System.Windows.Forms.Button btn_visibility;
     }
 }

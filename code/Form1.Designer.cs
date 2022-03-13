@@ -30,19 +30,20 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.LeftPanel = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnGeneratePassword = new System.Windows.Forms.Button();
             this.btnViewPasswords = new System.Windows.Forms.Button();
             this.btnAddPassword = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.TopPanel = new System.Windows.Forms.Panel();
-            this.childPanel = new System.Windows.Forms.Panel();
-            this.btnKey = new System.Windows.Forms.Button();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label_enterKey = new System.Windows.Forms.Label();
             this.textBox_key = new System.Windows.Forms.TextBox();
+            this.btnKey = new System.Windows.Forms.Button();
+            this.label_enterKey = new System.Windows.Forms.Label();
+            this.childPanel = new System.Windows.Forms.Panel();
+            this.btnSubmitKey = new System.Windows.Forms.Button();
             this.LeftPanel.SuspendLayout();
-            this.TopPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.TopPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // LeftPanel
@@ -57,6 +58,17 @@
             this.LeftPanel.Name = "LeftPanel";
             this.LeftPanel.Size = new System.Drawing.Size(200, 397);
             this.LeftPanel.TabIndex = 0;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.pictureBox1.Image = global::PasswordManager.Properties.Resources.lock_icon;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 30);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(200, 125);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
             // 
             // btnGeneratePassword
             // 
@@ -127,6 +139,7 @@
             // TopPanel
             // 
             this.TopPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(40)))), ((int)(((byte)(64)))));
+            this.TopPanel.Controls.Add(this.btnSubmitKey);
             this.TopPanel.Controls.Add(this.textBox_key);
             this.TopPanel.Controls.Add(this.btnKey);
             this.TopPanel.Controls.Add(this.label_enterKey);
@@ -137,13 +150,17 @@
             this.TopPanel.Size = new System.Drawing.Size(580, 48);
             this.TopPanel.TabIndex = 2;
             // 
-            // childPanel
+            // textBox_key
             // 
-            this.childPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.childPanel.Location = new System.Drawing.Point(200, 48);
-            this.childPanel.Name = "childPanel";
-            this.childPanel.Size = new System.Drawing.Size(580, 349);
-            this.childPanel.TabIndex = 3;
+            this.textBox_key.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_key.ForeColor = System.Drawing.Color.Black;
+            this.textBox_key.Location = new System.Drawing.Point(299, 10);
+            this.textBox_key.MaxLength = 100;
+            this.textBox_key.Name = "textBox_key";
+            this.textBox_key.Size = new System.Drawing.Size(181, 29);
+            this.textBox_key.TabIndex = 1;
+            this.textBox_key.UseSystemPasswordChar = true;
+            this.textBox_key.Visible = false;
             // 
             // btnKey
             // 
@@ -163,17 +180,6 @@
             this.btnKey.UseVisualStyleBackColor = false;
             this.btnKey.Click += new System.EventHandler(this.btnKey_Click);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.pictureBox1.Image = global::PasswordManager.Properties.Resources.lock_icon;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 30);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(200, 125);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
-            // 
             // label_enterKey
             // 
             this.label_enterKey.AutoSize = true;
@@ -186,18 +192,31 @@
             this.label_enterKey.Text = "Enter master password";
             this.label_enterKey.Visible = false;
             // 
-            // textBox_key
+            // childPanel
             // 
-            this.textBox_key.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_key.ForeColor = System.Drawing.Color.Black;
-            this.textBox_key.Location = new System.Drawing.Point(299, 10);
-            this.textBox_key.MaxLength = 100;
-            this.textBox_key.Name = "textBox_key";
-            this.textBox_key.Size = new System.Drawing.Size(215, 29);
-            this.textBox_key.TabIndex = 1;
-            this.textBox_key.UseSystemPasswordChar = true;
-            this.textBox_key.Visible = false;
-            this.textBox_key.TextChanged += new System.EventHandler(this.textBox_key_TextChanged);
+            this.childPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.childPanel.Location = new System.Drawing.Point(200, 48);
+            this.childPanel.Name = "childPanel";
+            this.childPanel.Size = new System.Drawing.Size(580, 349);
+            this.childPanel.TabIndex = 3;
+            // 
+            // btnSubmitKey
+            // 
+            this.btnSubmitKey.BackColor = System.Drawing.Color.Transparent;
+            this.btnSubmitKey.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnSubmitKey.BackgroundImage")));
+            this.btnSubmitKey.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnSubmitKey.FlatAppearance.BorderSize = 0;
+            this.btnSubmitKey.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
+            this.btnSubmitKey.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
+            this.btnSubmitKey.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSubmitKey.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSubmitKey.Location = new System.Drawing.Point(480, 8);
+            this.btnSubmitKey.Name = "btnSubmitKey";
+            this.btnSubmitKey.Size = new System.Drawing.Size(36, 34);
+            this.btnSubmitKey.TabIndex = 3;
+            this.btnSubmitKey.UseVisualStyleBackColor = false;
+            this.btnSubmitKey.Visible = false;
+            this.btnSubmitKey.Click += new System.EventHandler(this.btnSubmitKey_Click);
             // 
             // MainWindow
             // 
@@ -213,9 +232,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Password Manager";
             this.LeftPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.TopPanel.ResumeLayout(false);
             this.TopPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -233,6 +252,7 @@
         private System.Windows.Forms.Button btnKey;
         private System.Windows.Forms.TextBox textBox_key;
         private System.Windows.Forms.Label label_enterKey;
+        private System.Windows.Forms.Button btnSubmitKey;
     }
 }
 

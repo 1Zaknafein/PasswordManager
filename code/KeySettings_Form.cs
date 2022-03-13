@@ -14,19 +14,29 @@ namespace PasswordManager.code
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            if (textBox_key.TextLength > 0 ) {
+            if (textBox_key.TextLength < 8) {
 
-                if (!MainWindow.credentialsDictionary.ContainsKey("Masterkey"))
-                {
-                    MainWindow.credentialsDictionary.Add("Masterkey", textBox_key.Text);
-                    btnDelete.Visible = true;
-                    btnEdit.Visible = true;
-                    btnSubmit.Visible = false;
-                    textBox_key.Enabled = false;
-                }
-                else if (textBox_key.Text == MainWindow.credentialsDictionary["Masterkey"])
-                {
-                    // correct key
+                MessageBox.Show("" +
+                    "Master password needs to be at least 8 characters long",
+                    "",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return;
+            }
+
+
+            if (!MainWindow.credentialsDictionary.ContainsKey("Masterkey")){
+                MainWindow.credentialsDictionary.Add("Masterkey", textBox_key.Text);
+                btnDelete.Visible = true;
+                btnEdit.Visible = true;
+                btnSubmit.Visible = false;
+                textBox_key.Enabled = false;
+                btn_visibility.Visible = true;
+            }
+            else if (textBox_key.Text == MainWindow.credentialsDictionary["Masterkey"])
+            {
+                // correct key
                     btnDelete.Visible = true;
                     btnEdit.Visible = true;
                     btnSubmit.Visible = false;
@@ -35,15 +45,17 @@ namespace PasswordManager.code
                     label_tick.Visible = true;
                     label_tick.Text = "✓";
                     label_tick.ForeColor = Color.Green;
+
+                btn_visibility.Visible = true;
                 }
-                else {
+            else {
                     label_tick.Visible = true;
                     label_tick.Text = "x";
                     label_tick.ForeColor = Color.Red;
                 }
 
             }
-        }
+        
 
         private void textBox_key_TextChanged(object sender, EventArgs e)
         {
@@ -70,6 +82,8 @@ namespace PasswordManager.code
                     MessageBoxIcon.Question);
             if (q == DialogResult.Yes) {
                 MainWindow.credentialsDictionary.Remove("Masterkey");
+
+                MainWindow.privateKey = "x+HXf92M";
                 Close();
             }
 
@@ -77,6 +91,16 @@ namespace PasswordManager.code
 
         private void btnEditOK_Click(object sender, EventArgs e)
         {
+
+            if (textBox_edit.TextLength < 8) {
+                MessageBox.Show("" +
+                    "Master passwords needs to be at least 8 characters long",
+                    "",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                textBox_edit.Text = "";
+                return;
+            }
             MainWindow.credentialsDictionary["Masterkey"] = textBox_edit.Text;
             btnEditCancel.Visible = false;
             btnEditOK.Visible = false;
@@ -96,6 +120,22 @@ namespace PasswordManager.code
         private void textBox_edit_TextChanged(object sender, EventArgs e)
         {
             if (textBox_edit.TextLength > 0) { btnEditOK.Enabled = true; }
+        }
+
+        private void btn_visibility_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+
+            if (button.BackColor == Color.Transparent)
+            {
+                button.BackColor = Color.WhiteSmoke;
+                textBox_key.UseSystemPasswordChar = false;
+            }
+            else
+            {
+                button.BackColor = Color.Transparent;
+                textBox_key.UseSystemPasswordChar = true;
+            }
         }
     }
 }

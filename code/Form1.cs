@@ -7,19 +7,24 @@ using PasswordManager.graphics;
 using System.IO;
 using System.Linq;
 using PasswordManager.code;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace PasswordManager
 {
     public partial class MainWindow : Form
     {
 
-        public static IDictionary<string,string> credentialsDictionary = new Dictionary<string,string>();
+        public static Dictionary<string,string> credentialsDictionary = new Dictionary<string,string>();
 
 
         private int[] colorGreen = new int[] { 8, 163, 26 };
         private int[] colorBlue = new int[] { 0, 126, 250 };
 
         private List<Button> buttons = new List<Button>();
+        private string publicKey = "rxIdwETS";
+        public static string privateKey = "x+HXf92M";
+
 
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(
@@ -56,14 +61,13 @@ namespace PasswordManager
         {
             InitializeComponent();
 
-            
             Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 25, 25));
             TopPanel.MouseDown += Form1_MouseDown;
             LeftPanel.MouseDown += Form1_MouseDown;
             pictureBox1.MouseDown += Form1_MouseDown;
 
-            LoadData();
 
+            LoadData();
 
 
             if (credentialsDictionary.ContainsKey("Masterkey"))
@@ -74,8 +78,14 @@ namespace PasswordManager
                 btnKey.Enabled = false;
                 label_enterKey.Visible = true;
                 textBox_key.Visible = true;
+                btnSubmitKey.Visible = true;
+            }
+            else {
+                credentialsDictionary = credentialsDictionary.ToDictionary(k => k.Key, v => Decrypt(v.Value, privateKey));
+
             }
 
+            Focus();
 
         }
 
@@ -153,10 +163,36 @@ namespace PasswordManager
 
         public void SaveData() {
 
+            
+            byte[] secretkeyByte = { };
+            if (UsesMasterPassword()) privateKey = GetMasterPassword();
+            secretkeyByte = Encoding.UTF8.GetBytes(privateKey);
+            byte[] publickeybyte = { };
+            publickeybyte = Encoding.UTF8.GetBytes(publicKey);
+            MemoryStream ms = null;
+            CryptoStream cs = null;
+
+            var encryptedPasswordsDict = new Dictionary<string, string>();
+
+            foreach (var i in credentialsDictionary) {
+
+                byte[] inputbyteArray = Encoding.UTF8.GetBytes(i.Value);
+                using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
+                {
+
+                    
+                    ms = new MemoryStream();
+                    cs = new CryptoStream(ms, des.CreateEncryptor(publickeybyte, secretkeyByte), CryptoStreamMode.Write);
+                    cs.Write(inputbyteArray, 0, inputbyteArray.Length);
+                    cs.FlushFinalBlock();
+                    encryptedPasswordsDict.Add(i.Key, Convert.ToBase64String(ms.ToArray()));
+                }
+            }
+
 
             File.WriteAllLines(
                 Directory.GetCurrentDirectory() + "\\SavedPasswords",
-                credentialsDictionary.Select(kvp => string.Format("{0};{1}", kvp.Key, kvp.Value)));
+                encryptedPasswordsDict.Select(kvp => string.Format("{0};{1}", kvp.Key, kvp.Value)));
         }
 
         public void LoadData() {
@@ -176,14 +212,12 @@ namespace PasswordManager
                 }
 
             }
-            catch (FileNotFoundException) {}
-
-
-
+            catch (FileNotFoundException) { }
         }
 
         private void btnKey_Click(object sender, EventArgs e)
         {
+            ResetButtonsColour();
             if (!credentialsDictionary.ContainsKey("Masterkey"))
             {
                 DialogResult q = MessageBox.Show("" +
@@ -194,18 +228,48 @@ namespace PasswordManager
                     MessageBoxIcon.Question);
 
 
-                if (q == DialogResult.Yes)
-                {
-                    loadForm(new KeySettings_Form());
-                }
+                if (q == DialogResult.Yes){loadForm(new KeySettings_Form());}
 
             }
             else { loadForm(new KeySettings_Form()); }
         }
 
-        private void textBox_key_TextChanged(object sender, EventArgs e)
+
+        public bool UsesMasterPassword() {
+            return credentialsDictionary.ContainsKey("Masterkey");
+        }
+
+        public string GetMasterPassword() {
+            try
+            {
+                return credentialsDictionary["Masterkey"];
+            }
+            catch (Exception) {
+                return null;
+            }
+            
+        }
+
+        private void btnSubmitKey_Click(object sender, EventArgs e)
         {
-            if (textBox_key.Text == credentialsDictionary["Masterkey"]) {
+            
+
+
+            // if correct key has been put
+
+            var key = Decrypt(GetMasterPassword(), textBox_key.Text);
+
+            if (key != null && textBox_key.Text == key)
+            {
+
+
+                // then decrypt rest of data
+
+                credentialsDictionary = credentialsDictionary.ToDictionary(k => k.Key, v => Decrypt(v.Value, key));
+
+
+                privateKey = textBox_key.Text;
+
                 btnAddPassword.Enabled = true;
                 btnGeneratePassword.Enabled = true;
                 btnViewPasswords.Enabled = true;
@@ -214,9 +278,49 @@ namespace PasswordManager
                 textBox_key.Text = "";
                 label_enterKey.Visible = false;
                 textBox_key.Visible = false;
+                btnSubmitKey.Visible = false;
+
+            }
+            else {
+
+                MessageBox.Show("" +
+                    "Invalid password",
+                    "",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                textBox_key.Text = "";
+            }
+        }
+
+        private string Decrypt(string text, string key) {
+
+            string result = null;
+
+
+            try
+            {
+                byte[] privateKeyByte = Encoding.UTF8.GetBytes(key);
+                byte[] publicKeyByte = Encoding.UTF8.GetBytes(publicKey);
+                byte[] inputbyteArray = new byte[text.Replace(" ", "+").Length];
+                inputbyteArray = Convert.FromBase64String(text.Replace(" ", "+"));
+
+                using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
+                {
+                    MemoryStream ms = new MemoryStream();
+                    CryptoStream cs = new CryptoStream(ms, des.CreateDecryptor(publicKeyByte, privateKeyByte), CryptoStreamMode.Write);
+                    cs.Write(inputbyteArray, 0, inputbyteArray.Length);
+                    cs.FlushFinalBlock();
+                    Encoding encoding = Encoding.UTF8;
+                    result = encoding.GetString(ms.ToArray());
+                }
 
 
             }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+            return result;
         }
+
     }
+
 }
